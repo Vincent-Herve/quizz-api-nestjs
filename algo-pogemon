@@ -1,0 +1,41 @@
+N <= 10 (Nombre de cartes contenues dans les decks de chacun des joueurs)
+"Eau" "Eau" "Feu" "Poison" => Carte de sacha
+"Plante" "Eau" "Sol" "Glace" => Mes cartes
+
+Entrée
+
+4
+"Eau" "Feu" "Feu" "Plante"
+"Plante" "Feu" "Feu" "Eau"
+
+Sortie
+
+-1
+// "Plante" "Eau" "Feu" "Feu" 
+
+ALGO
+
+sachaDeck = "Eau" "Feu" "Feu" "Plante" (.length = 4)
+myDeck = "Plante" "Feu" "Feu" "Eau" (.length = 4)
+
+faiblesses = {
+    Eau = {
+        Plante: -1,
+        Sol: -1
+    },
+    Feu = {
+        Eau: -1,
+        Plante: 1,
+        Glace: 1
+    },
+    Plante = {
+        Poison: 1,
+        Sol: -1,
+        Vol: 1
+    }
+}
+
+1
+"Eau"
+"Plante"
+
