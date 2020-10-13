@@ -1,18 +1,53 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QuizzService } from './quizz.service';
+import { QuizzRepository } from './quizz.repository';
+
+const mockQuizzRepository = () => ({
+  find: jest.fn(),
+});
 
 describe('QuizzService', () => {
-  let service: QuizzService;
+  let quizzService;
+  let quizzRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [QuizzService],
+      providers: [
+        QuizzService,
+        { provide: QuizzRepository, useFactory: mockQuizzRepository }
+      ],
     }).compile();
 
-    service = module.get<QuizzService>(QuizzService);
+    quizzService = module.get<QuizzService>(QuizzService);
+    quizzRepository = module.get<QuizzRepository>(QuizzRepository);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('getQuizzes', () => {
+    it('get all quizz from the repository', async () => {
+      quizzRepository.find.mockResolvedValue('someValue');
+      
+      const result = await quizzService.getQuizzes();
+      expect(result).toEqual('someValue');
+    });
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
