@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuizzRepository } from './quizz.repository';
-import { Quizz } from './quizz.entity';
+import { Quizz } from './entities/quizz.entity';
+import { QuizzDto } from './dto/quizz.dto';
 
 @Injectable()
 export class QuizzService {
@@ -25,4 +26,24 @@ export class QuizzService {
 
         return found;
     }
+
+    async createQuizz(quizzDto: QuizzDto): Promise<Quizz> {
+        return this.quizzRepository.createQuizz(quizzDto);
+    }
+
+    async updateQuizz(id: number, quizzDto: QuizzDto): Promise<Quizz> {
+        const quizz = await this.getQuizzById(id);
+        const { title, description } = quizzDto;
+
+        if (title !== "") quizz.title = title;
+        if (description !== "") quizz.description = description;
+        await quizz.save();
+        return quizz;
+    }
+
+    async deleteQuizz(id: number): Promise<void> {
+        const result = await this.quizzRepository.delete(id);
+
+        if (result.affected === 0) throw new NotFoundException(`Quizz with "${id}" not found`);
+    } 
 }
