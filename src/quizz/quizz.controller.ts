@@ -2,7 +2,8 @@ import { Body, Controller, Delete, Get, Logger, Param, ParseIntPipe, Patch, Post
 import { ApiTags } from '@nestjs/swagger';
 import { QuizzService } from './quizz.service';
 import { Quizz } from './entities/quizz.entity';
-import { QuizzDto } from './dto/quizz.dto';
+import { UpdateQuizzDto } from './dto/update-quizz.dto';
+import { CreateQuizzDto } from './dto/create-quizz.dto';
 
 @ApiTags('quizz')
 @Controller('quizz')
@@ -24,18 +25,18 @@ export class QuizzController {
     }
 
     @Post()
-    createQuizz(@Body() quizzDto: QuizzDto): Promise<Quizz> {
+    createQuizz(@Body() createQuizzDto: CreateQuizzDto): Promise<Quizz> {
         this.logger.verbose(`Create simple quizz`);
-        return this.quizzService.createQuizz(quizzDto);
+        return this.quizzService.createQuizz(createQuizzDto);
     }
     
     @Patch('/:id')
     updateQuizz(
         @Param('id', ParseIntPipe) id: number,
-        @Body() quizzDto: QuizzDto
+        @Body() updateQuizzDto: UpdateQuizzDto
     ): Promise<Quizz> {
-        this.logger.verbose(`Update quizz's title and description`);
-        return this.quizzService.updateQuizz(id, quizzDto);
+        this.logger.verbose(`Update quizz's title and/or description`);
+        return this.quizzService.updateQuizz(id, updateQuizzDto);
     }
 
     @Delete('/:id')

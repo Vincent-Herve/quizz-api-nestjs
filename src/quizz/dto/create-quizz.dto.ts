@@ -1,11 +1,9 @@
 import { IsNotEmpty } from "class-validator";
 
-export class QuizzDto {
+export class CreateQuizzDto {
     @IsNotEmpty()
     title: string;
-
+    
     @IsNotEmpty()
     description: string;
-
-    status: boolean;
 }
