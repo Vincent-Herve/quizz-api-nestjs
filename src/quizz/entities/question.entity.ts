@@ -18,8 +18,8 @@ export class Question extends BaseEntity {
     status: boolean;
 
     @OneToOne(type => Answer)
-    @JoinColumn()
-    answer: Answer;
+    @JoinColumn({ name: "good_answer" })
+    good_answer: Answer;
 
     @OneToMany(type => Answer, answer => answer.question)
     answers: Answer[];

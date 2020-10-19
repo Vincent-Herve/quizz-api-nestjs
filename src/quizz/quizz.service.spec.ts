@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QuizzService } from './quizz.service';
-import { QuizzRepository } from './quizz.repository';
+import { QuizzRepository } from './repository/quizz.repository';
 
 const mockQuizzRepository = () => ({
   find: jest.fn(),

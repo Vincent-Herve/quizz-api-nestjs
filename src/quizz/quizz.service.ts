@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { QuizzRepository } from './quizz.repository';
+import { QuizzRepository } from './repository/quizz.repository';
 import { Quizz } from './entities/quizz.entity';
 import { UpdateQuizzDto } from './dto/update-quizz.dto';
 import { CreateQuizzDto } from './dto/create-quizz.dto';
@@ -13,13 +13,13 @@ export class QuizzService {
     ) {}
 
     async getQuizzes(): Promise<Quizz[]> {
-        const quizzes = await this.quizzRepository.find({ relations: ['tags', 'questions', 'questions.level', 'questions.answers', 'questions.answer'] });
+        const quizzes = await this.quizzRepository.find({ relations: ['tags', 'questions', 'questions.level', 'questions.answers', 'questions.good_answer'] });
 
         return quizzes;
     }
 
     async getQuizzById(id: number): Promise<Quizz> {
-        const found = await this.quizzRepository.findOne(id, { relations: ['tags', 'questions', 'questions.level', 'questions.answers', 'questions.answer'] });
+        const found = await this.quizzRepository.findOne(id, { relations: ['tags', 'questions', 'questions.level', 'questions.answers', 'questions.good_answer'] });
 
         if (!found) {
             throw new NotFoundException(`Quizz with "${id}" not found`);

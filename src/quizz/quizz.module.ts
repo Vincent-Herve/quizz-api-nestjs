@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuizzController } from './quizz.controller';
 import { QuizzService } from './quizz.service';
-import { QuizzRepository } from './quizz.repository';
+import { QuizzRepository } from './repository/quizz.repository';
 
 @Module({
   imports: [

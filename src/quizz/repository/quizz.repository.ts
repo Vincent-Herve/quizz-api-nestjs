@@ -1,7 +1,7 @@
 import { Repository, EntityRepository } from "typeorm";
-import { Quizz } from './entities/quizz.entity';
-import { CreateQuizzDto } from './dto/create-quizz.dto';
-import { UpdateQuizzDto } from './dto/update-quizz.dto';
+import { Quizz } from '../entities/quizz.entity';
+import { CreateQuizzDto } from '../dto/create-quizz.dto';
+import { UpdateQuizzDto } from '../dto/update-quizz.dto';
 
 @EntityRepository(Quizz)
 export class QuizzRepository extends Repository<Quizz> {
