@@ -1,10 +1,8 @@
 export const QUIZZ_TAG: string = `
     INSERT INTO "quizz_tags_tag" ("quizzId", "tagId") VALUES
-    (1, 1),
-    (1, 6),
-    (2, 3),
-    (2, 7),
-    (2, 9);
+    (1, 2),
+    (2, 2),
+    (2, 5);
 `;
 
 export const QUIZZ_QUESTION: string[] = [
