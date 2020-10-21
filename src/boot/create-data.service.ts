@@ -1,100 +1,74 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Answer } from 'src/fixtures/answer';
-import { Level } from 'src/fixtures/level';
+import { Injectable } from '@nestjs/common';
+import { Connection, getManager } from 'typeorm';
 import { ANSWER } from 'src/fixtures/mock-answer';
 import { LEVEL } from 'src/fixtures/mock-level';
 import { QUESTION } from 'src/fixtures/mock-question';
 import { QUIZZ } from 'src/fixtures/mock-quizz';
 import { QUESTION_ANSWER, QUESTION_GOOD_ANSWER, QUESTION_LEVEL, QUIZZ_QUESTION, QUIZZ_TAG } from 'src/fixtures/mock-relation';
 import { TAG } from 'src/fixtures/mock-tag';
-import { Question } from 'src/fixtures/question';
-import { Quizz } from 'src/fixtures/quizz';
-import { Tag } from 'src/fixtures/tag';
-import { AnswerRepository } from 'src/quizz/repository/answer.repository';
-import { LevelRepository } from 'src/quizz/repository/level.repository';
-import { QuestionRepository } from 'src/quizz/repository/question.repository';
-import { QuizzRepository } from 'src/quizz/repository/quizz.repository';
-import { TagRepository } from 'src/tag/repository/tag.repository';
-import { getManager } from 'typeorm';
+import { Quizz } from 'src/quizz/entities/quizz.entity';
+import { Question } from 'src/quizz/entities/question.entity';
+import { Answer } from 'src/quizz/entities/answer.entity';
+import { Level } from 'src/quizz/entities/level.entity';
+import { Tag } from 'src/tag/entities/tag.entity';
 
 @Injectable()
-export class CreateDataService implements OnModuleInit {
-    private quizzes: Quizz[];
-    private questions: Question[];
-    private answers: Answer[];
-    private levels: Level[];
-    private tags: Tag[];
-
+export class CreateDataService {
     constructor(
-        @InjectRepository(QuizzRepository)
-        private quizzRepository: QuizzRepository,
-        @InjectRepository(QuestionRepository)
-        private questionRepository: QuestionRepository,
-        @InjectRepository(AnswerRepository)
-        private answerRepository: AnswerRepository,
-        @InjectRepository(LevelRepository)
-        private levelRepository: LevelRepository,
-        @InjectRepository(TagRepository)
-        private tagRepository: TagRepository
+        private connection: Connection
     ) {}
 
-    onModuleInit() {
-        this.quizzes = QUIZZ;
-        this.questions = QUESTION;
-        this.answers = ANSWER;
-        this.levels = LEVEL;
-        this.tags = TAG;
-    }
-
-    async createData() {
+    async createData(): Promise<void> {
         // Create Quizz
         console.log('CREATING QUIZZ');
-        for (let quizz of this.quizzes) {
-            this.quizzRepository.createQuizz(quizz);
+        for (const quizz of QUIZZ) {
+            const newQuizz = this.connection.getRepository(Quizz).create(quizz);
+            await this.connection.getRepository(Quizz).save(newQuizz)
         }
         // Create Question
         console.log('CREATING QUESTION');
-        for (let question of this.questions) {
-            await this.questionRepository.createQuestion(question);
+        for (const question of QUESTION) {
+            const newQuestion = this.connection.getRepository(Question).create(question);
+            await this.connection.getRepository(Question).save(newQuestion)
         }
         // Create Answer
         console.log('CREATING ANSWER');
-        for (let answer of this.answers) {
-            let newAnswer = this.answerRepository.create(answer);
-            await newAnswer.save();
+        for (const answer of ANSWER) {
+            const newAnswer = this.connection.getRepository(Answer).create(answer);
+            await this.connection.getRepository(Answer).save(newAnswer)
         }
         // Create Level
         console.log('CREATING LEVEL');
-        for (let level of this.levels) {
-            let newLevel = this.levelRepository.create(level);
-            await newLevel.save();
+        for (const level of LEVEL) {
+            const newLevel = this.connection.getRepository(Level).create(level);
+            await this.connection.getRepository(Level).save(newLevel)
         }
         // Create Tag
         console.log('CREATING TAG');
-        for (let tag of this.tags) {
-            let newTag = this.tagRepository.create(tag);
-            await newTag.save();
+        for (const tag of TAG) {
+            const newTag = this.connection.getRepository(Tag).create(tag);
+            await this.connection.getRepository(Tag).save(newTag)
         }
         // Relations
         console.log('CREATING RELATIONS');
         const entityManager = getManager();
         entityManager.query(QUIZZ_TAG);
-        for (let query of QUIZZ_QUESTION) entityManager.query(query);
-        for (let query of QUESTION_LEVEL) entityManager.query(query);
-        for (let query of QUESTION_GOOD_ANSWER) entityManager.query(query);
-        for (let query of QUESTION_ANSWER) entityManager.query(query);
+        for (const query of QUIZZ_QUESTION) entityManager.query(query);
+        for (const query of QUESTION_LEVEL) entityManager.query(query);
+        for (const query of QUESTION_GOOD_ANSWER) entityManager.query(query);
+        for (const query of QUESTION_ANSWER) entityManager.query(query);
     }
 
-    async cleanAll() {
-        await this.quizzRepository.query('TRUNCATE TABLE quizz RESTART IDENTITY CASCADE');
-        await this.questionRepository.query('TRUNCATE TABLE question RESTART IDENTITY CASCADE');
-        await this.answerRepository.query('TRUNCATE TABLE answer RESTART IDENTITY CASCADE');
-        await this.levelRepository.query('TRUNCATE TABLE level RESTART IDENTITY CASCADE');
-        await this.tagRepository.query('TRUNCATE TABLE tag RESTART IDENTITY CASCADE');
+    async cleanAll(): Promise<void> {
+        const entityManager = getManager();
+        await entityManager.query('TRUNCATE TABLE quizz RESTART IDENTITY CASCADE');
+        await entityManager.query('TRUNCATE TABLE question RESTART IDENTITY CASCADE');
+        await entityManager.query('TRUNCATE TABLE answer RESTART IDENTITY CASCADE');
+        await entityManager.query('TRUNCATE TABLE level RESTART IDENTITY CASCADE');
+        await entityManager.query('TRUNCATE TABLE tag RESTART IDENTITY CASCADE');
     }
 
-    async loadFixture() {
+    async loadFixture(): Promise<void> {
         console.log('** DELETING EXISTING DATA **');
         await this.cleanAll();
         console.log('** LOADING FIXTURES **');

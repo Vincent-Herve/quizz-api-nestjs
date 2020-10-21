@@ -10,13 +10,14 @@ import { QuizzRepository } from './repository/quizz.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([QuizzRepository]),
-    TypeOrmModule.forFeature([QuestionRepository]),
-    TypeOrmModule.forFeature([AnswerRepository]),
-    TypeOrmModule.forFeature([LevelRepository]),
-    TypeOrmModule.forFeature([TagRepository]),
+    TypeOrmModule.forFeature([
+      QuizzRepository,
+      QuestionRepository,
+      AnswerRepository,
+      LevelRepository,
+      TagRepository
+    ])
   ],
-  exports: [TypeOrmModule],
   controllers: [QuizzController],
   providers: [QuizzService]
 })

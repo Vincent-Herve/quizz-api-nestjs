@@ -18,7 +18,7 @@ const dbConfig = config.get('db');
 export class AppModule implements OnModuleInit {
   constructor(private createDataService: CreateDataService) {}
 
-  onModuleInit() {
+  onModuleInit(): void {
     if (dbConfig.loadFixtures) this.createDataService.loadFixture();
   }
 }

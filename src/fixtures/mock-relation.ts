@@ -1,4 +1,4 @@
-export const QUIZZ_TAG: string = `
+export const QUIZZ_TAG = `
     INSERT INTO "quizz_tags_tag" ("quizzId", "tagId") VALUES
     (1, 2),
     (2, 2),
