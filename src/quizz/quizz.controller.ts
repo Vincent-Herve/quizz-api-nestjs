@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Logger, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { QuizzService } from './quizz.service';
 import { Quizz } from './entities/quizz.entity';
@@ -19,7 +19,7 @@ export class QuizzController {
     }
 
     @Get('/:id')
-    getQuizzById(@Param('id', ParseIntPipe) id: number): Promise<Quizz> {
+    getQuizzById(@Param('id') id: string): Promise<Quizz> {
         this.logger.verbose(`Get quizz by id`);
         return this.quizzService.getQuizzById(id);
     }
@@ -32,7 +32,7 @@ export class QuizzController {
     
     @Patch('/:id')
     updateQuizz(
-        @Param('id', ParseIntPipe) id: number,
+        @Param('id') id: string,
         @Body() updateQuizzDto: UpdateQuizzDto
     ): Promise<Quizz> {
         this.logger.verbose(`Update quizz's title and/or description`);
@@ -40,7 +40,7 @@ export class QuizzController {
     }
 
     @Delete('/:id')
-    deleteQuizz(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    deleteQuizz(@Param('id') id: string): Promise<void> {
         this.logger.verbose(`Delete quizz by id`);
         return this.quizzService.deleteQuizz(id);
     } 

@@ -18,7 +18,7 @@ export class QuizzService {
         return quizzes;
     }
 
-    async getQuizzById(id: number): Promise<Quizz> {
+    async getQuizzById(id: string): Promise<Quizz> {
         const found = await this.quizzRepository.findOne(id, { relations: ['tags', 'questions', 'questions.level', 'questions.answers', 'questions.good_answer'] });
 
         if (!found) {
@@ -32,12 +32,12 @@ export class QuizzService {
         return this.quizzRepository.createQuizz(createQuizzDto);
     }
 
-    async updateQuizz(id: number, updateQuizzDto: UpdateQuizzDto): Promise<Quizz> {
+    async updateQuizz(id: string, updateQuizzDto: UpdateQuizzDto): Promise<Quizz> {
         const quizz = await this.getQuizzById(id);
         return this.quizzRepository.updateQuizz(quizz, updateQuizzDto);
     }
 
-    async deleteQuizz(id: number): Promise<void> {
+    async deleteQuizz(id: string): Promise<void> {
         const result = await this.quizzRepository.delete(id);
 
         if (result.affected === 0) throw new NotFoundException(`Quizz with "${id}" not found`);
