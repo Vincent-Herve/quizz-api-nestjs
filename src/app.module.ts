@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import * as config from 'config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateDataService } from './boot/create-data.service';
@@ -15,7 +15,7 @@ const dbConfig = config.get('db');
   providers: [CreateDataService]
 })
 
-export class AppModule implements OnModuleInit {
+export class AppModule {
   constructor(private createDataService: CreateDataService) {}
 
   onModuleInit(): void {

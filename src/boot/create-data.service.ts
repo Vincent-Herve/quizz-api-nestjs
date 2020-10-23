@@ -4,7 +4,6 @@ import { ANSWER } from 'src/fixtures/mock-answer';
 import { LEVEL } from 'src/fixtures/mock-level';
 import { QUESTION } from 'src/fixtures/mock-question';
 import { QUIZZ } from 'src/fixtures/mock-quizz';
-import { QUESTION_ANSWER, QUESTION_GOOD_ANSWER, QUESTION_LEVEL, QUIZZ_QUESTION, QUIZZ_TAG } from 'src/fixtures/mock-relation';
 import { TAG } from 'src/fixtures/mock-tag';
 import { Quizz } from 'src/quizz/entities/quizz.entity';
 import { Question } from 'src/quizz/entities/question.entity';
@@ -50,13 +49,13 @@ export class CreateDataService {
             await this.connection.getRepository(Tag).save(newTag)
         }
         // Relations
-        console.log('CREATING RELATIONS');
+        /* console.log('CREATING RELATIONS');
         const entityManager = getManager();
         entityManager.query(QUIZZ_TAG);
         for (const query of QUIZZ_QUESTION) entityManager.query(query);
         for (const query of QUESTION_LEVEL) entityManager.query(query);
         for (const query of QUESTION_GOOD_ANSWER) entityManager.query(query);
-        for (const query of QUESTION_ANSWER) entityManager.query(query);
+        for (const query of QUESTION_ANSWER) entityManager.query(query); */
     }
 
     async cleanAll(): Promise<void> {

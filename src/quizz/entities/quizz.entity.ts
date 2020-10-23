@@ -4,8 +4,8 @@ import { Tag } from '../../tag/entities/tag.entity';
 
 @Entity()
 export class Quizz extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
 
     @Column()
     title: string;

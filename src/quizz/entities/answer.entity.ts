@@ -3,8 +3,8 @@ import { Question } from './question.entity';
 
 @Entity()
 export class Answer extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
 
     @Column()
     answer: string;
