@@ -4,13 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateDataService } from './boot/create-data.service';
 import { typeOrmConfig } from './config/typeorm.config';
 import { QuizzModule } from './quizz/quizz.module';
+import { AuthModule } from './auth/auth.module';
 
 const dbConfig = config.get('db');
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-    QuizzModule
+    QuizzModule,
+    AuthModule,
   ],
   providers: [CreateDataService]
 })

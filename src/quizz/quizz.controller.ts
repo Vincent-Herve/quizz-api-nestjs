@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Logger, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { QuizzService } from './quizz.service';
-import { Quizz } from './entities/quizz.entity';
+import { Quizz } from './entity/quizz.entity';
 import { UpdateQuizzDto } from './dto/update-quizz.dto';
 import { CreateQuizzDto } from './dto/create-quizz.dto';
 

@@ -5,10 +5,10 @@ import { LEVEL } from 'src/fixtures/mock-level';
 import { QUESTION } from 'src/fixtures/mock-question';
 import { QUIZZ } from 'src/fixtures/mock-quizz';
 import { TAG } from 'src/fixtures/mock-tag';
-import { Quizz } from 'src/quizz/entities/quizz.entity';
-import { Question } from 'src/quizz/entities/question.entity';
-import { Answer } from 'src/quizz/entities/answer.entity';
-import { Level } from 'src/quizz/entities/level.entity';
+import { Quizz } from 'src/quizz/entity/quizz.entity';
+import { Question } from 'src/quizz/entity/question.entity';
+import { Answer } from 'src/quizz/entity/answer.entity';
+import { Level } from 'src/quizz/entity/level.entity';
 import { Tag } from 'src/tag/entities/tag.entity';
 
 @Injectable()

@@ -16,10 +16,10 @@ export class Quizz extends BaseEntity {
     @Column({ default: true })
     status: boolean;
 
-    @OneToMany(type => Question, question => question.quizz)
+    @OneToMany(() => Question, question => question.quizz)
     questions: Question[];
 
-    @ManyToMany(type => Tag)
+    @ManyToMany(() => Tag)
     @JoinTable()
     tags: Tag[];
 }

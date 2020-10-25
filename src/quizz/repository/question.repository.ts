@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from "typeorm";
-import { Question } from "../entities/question.entity";
+import { Question } from "../entity/question.entity";
 import { CreateQuestionDto } from "../dto/create-question.dto"
 
 @EntityRepository(Question)

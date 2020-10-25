@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from "typeorm";
-import { Level } from '../entities/level.entity';
+import { Level } from '../entity/level.entity';
 
 
 @EntityRepository(Level)

@@ -12,6 +12,6 @@ export class Level extends BaseEntity {
     @Column({ default: true })
     status: boolean;
 
-    @OneToMany(type => Question, question => question.level)
+    @OneToMany(() => Question, question => question.level)
     questions: Question[];
 }

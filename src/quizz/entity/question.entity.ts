@@ -17,16 +17,16 @@ export class Question extends BaseEntity {
     @Column({ default: true })
     status: boolean;
 
-    @OneToOne(type => Answer)
+    @OneToOne(() => Answer)
     @JoinColumn({ name: "good_answer" })
     good_answer: Answer;
 
-    @OneToMany(type => Answer, answer => answer.question)
+    @OneToMany(() => Answer, answer => answer.question)
     answers: Answer[];
 
-    @ManyToOne(type => Quizz, quizz => quizz.questions)
+    @ManyToOne(() => Quizz, quizz => quizz.questions)
     quizz: Quizz;
 
-    @ManyToOne(type => Level, level => level.questions)
+    @ManyToOne(() => Level, level => level.questions)
     level: Level;
 }

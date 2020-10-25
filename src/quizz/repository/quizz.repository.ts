@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from "typeorm";
-import { Quizz } from '../entities/quizz.entity';
+import { Quizz } from '../entity/quizz.entity';
 import { CreateQuizzDto } from '../dto/create-quizz.dto';
 import { UpdateQuizzDto } from '../dto/update-quizz.dto';
 

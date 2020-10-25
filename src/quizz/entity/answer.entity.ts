@@ -12,6 +12,6 @@ export class Answer extends BaseEntity {
     @Column({ default: true })
     status: boolean;
 
-    @ManyToOne(type => Question, question => question.answers)
+    @ManyToOne(() => Question, question => question.answers)
     question: Question;
 }
