@@ -1,5 +1,5 @@
 import { Repository, EntityRepository } from "typeorm";
-import { Tag } from '../entities/tag.entity';
+import { Tag } from '../entity/tag.entity';
 
 
 @EntityRepository(Tag)

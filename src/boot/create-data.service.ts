@@ -9,7 +9,7 @@ import { Quizz } from 'src/quizz/entity/quizz.entity';
 import { Question } from 'src/quizz/entity/question.entity';
 import { Answer } from 'src/quizz/entity/answer.entity';
 import { Level } from 'src/quizz/entity/level.entity';
-import { Tag } from 'src/tag/entities/tag.entity';
+import { Tag } from 'src/tag/entity/tag.entity';
 
 @Injectable()
 export class CreateDataService {

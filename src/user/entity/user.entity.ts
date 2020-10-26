@@ -23,7 +23,7 @@ export class User extends BaseEntity {
     @Length(8, 100)
     password: string;
 
-    @Column()
+    @Column({ default: 'user' })
     @IsNotEmpty()
     role: string;
 
@@ -36,7 +36,7 @@ export class User extends BaseEntity {
     updatedAt: Date;
 
     async validatePassword(password: string): Promise<boolean> {
-        const hash = await bcrypt.hash(password, 10)
-        return hash === this.password;
+        const validPassword = await bcrypt.compare(password, this.password);
+        return validPassword;
     }
 }
