@@ -23,7 +23,7 @@ export class User extends BaseEntity {
     @Length(8, 100)
     password: string;
 
-    @Column({ default: 'user' })
+    @Column({ default: 'member' })
     @IsNotEmpty()
     role: string;
 
