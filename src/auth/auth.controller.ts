@@ -20,6 +20,11 @@ export class AuthController {
         return this.authService.login(loginCredentialsDto);
     }
 
+    @Post('/admin-login')
+    async adminLogin(@Body() loginCredentialsDto: LoginCredentialsDto): Promise<{ access_token: string }> {
+        return this.authService.adminLogin(loginCredentialsDto);
+    }
+
     @UseGuards(AuthGuard(), RolesGuard)
     @Get('/test')
     @Roles('member', 'admin')

@@ -46,6 +46,23 @@ export class UserRepository extends Repository<User> {
         return null;
     }
 
+    async validateAdminUserPassword(
+        loginCredentialsDto: LoginCredentialsDto
+    ): Promise<JwtPayload> {
+        
+        const { username, password } = loginCredentialsDto;
+        const user = await this.findOne({ username });
+
+        if (user && await user.validatePassword(password) && user.role === 'admin') {
+            const { username, id } = user;
+            return {
+                username,
+                sub: id
+            }
+        }
+        return null;
+    }
+
     private async hashPassword(password: string): Promise<string> {
         return bcrypt.hash(password, 10);
     }
