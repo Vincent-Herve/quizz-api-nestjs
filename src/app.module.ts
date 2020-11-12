@@ -5,6 +5,7 @@ import { CreateDataService } from './boot/create-data.service';
 import { typeOrmConfig } from './config/typeorm.config';
 import { QuizzModule } from './quizz/quizz.module';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 const dbConfig = config.get('db');
 
@@ -13,6 +14,7 @@ const dbConfig = config.get('db');
     TypeOrmModule.forRoot(typeOrmConfig),
     QuizzModule,
     AuthModule,
+    UserModule
   ],
   providers: [CreateDataService]
 })

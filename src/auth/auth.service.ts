@@ -28,15 +28,4 @@ export class AuthService {
         const access_token = await this.jwtService.sign(payload);
         return { access_token };
     }
-
-    async adminLogin(loginCredentialsDto: LoginCredentialsDto): Promise<{ access_token: string }> {
-        const payload: JwtPayload = await this.userRepository.validateAdminUserPassword(loginCredentialsDto);
-
-        if (!payload) {
-            throw new UnauthorizedException('Invalid credentials');
-        }
-
-        const access_token = await this.jwtService.sign(payload);
-        return { access_token };
-    }
 }

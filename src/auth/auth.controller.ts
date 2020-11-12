@@ -1,11 +1,7 @@
-import { Body, Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginCredentialsDto } from './dto/login-credentials.dto';
 import { SignupCredentialsDto } from './dto/signup-credentials.dto';
-import { Roles } from './roles.decorator';
-import { RolesGuard } from './roles.guard';
-
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
@@ -18,17 +14,5 @@ export class AuthController {
     @Post('/login')
     async login(@Body() loginCredentialsDto: LoginCredentialsDto): Promise<{ access_token: string }> {
         return this.authService.login(loginCredentialsDto);
-    }
-
-    @Post('/admin-login')
-    async adminLogin(@Body() loginCredentialsDto: LoginCredentialsDto): Promise<{ access_token: string }> {
-        return this.authService.adminLogin(loginCredentialsDto);
-    }
-
-    @UseGuards(AuthGuard(), RolesGuard)
-    @Get('/test')
-    @Roles('member', 'admin')
-    getTest(@Request() req) {
-        return req.user;
     }
 }

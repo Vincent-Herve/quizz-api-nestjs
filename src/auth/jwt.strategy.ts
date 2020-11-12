@@ -10,24 +10,24 @@ const jwtConfig = config.get('jwt');
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(
-        @InjectRepository(UserRepository)
-        private userRepository: UserRepository,
-    ) {
-      super({
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: jwtConfig.secret
-      });
-    }
-  
-    async validate(payload: JwtPayload): Promise<any> {
-        const { username, sub } = payload;
-        const user = await this.userRepository.findOne({ id: sub, username });
-        
-        if (!user) {
-            throw new UnauthorizedException();
-        }
+  constructor(
+    @InjectRepository(UserRepository)
+    private userRepository: UserRepository,
+  ) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: jwtConfig.secret
+    });
+  }
 
-        return { id: user.id, username: user.username, role: user.role };
+  async validate(payload: JwtPayload): Promise<any> {
+    const { username, sub } = payload;
+    const user = await this.userRepository.findOne({ id: sub, username });
+    
+    if (!user) {
+      throw new UnauthorizedException();
     }
+
+    return { id: user.id, username: user.username, role: user.role };
+  }
 }
