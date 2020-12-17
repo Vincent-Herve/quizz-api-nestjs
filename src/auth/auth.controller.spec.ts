@@ -1,18 +1,31 @@
-import { Test, TestingModule } from '@nestjs/testing';
+// import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { UserRepository } from '../user/repository/user.repository';
+import { JwtModuleOptions, JwtService } from '@nestjs/jwt';
 
 describe('AuthController', () => {
-  let controller: AuthController;
+  let authController: AuthController;
+  let authService: AuthService;
+  let jwtService: JwtService;
+  let options: JwtModuleOptions;
+  let userRepository: UserRepository;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AuthController],
-    }).compile();
-
-    controller = module.get<AuthController>(AuthController);
+  beforeEach(() => {
+    userRepository = new UserRepository();
+    options = {
+      secret: 'topSecret51',
+      signOptions: {
+        expiresIn: '1800',
+      }
+    }
+    jwtService = new JwtService(options);
+    authService = new AuthService(userRepository, jwtService);
+    authController = new AuthController(authService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(authController).toBeDefined();
   });
+
 });
