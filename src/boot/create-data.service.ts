@@ -10,6 +10,8 @@ import { Question } from 'src/quizz/entity/question.entity';
 import { Answer } from 'src/quizz/entity/answer.entity';
 import { Level } from 'src/quizz/entity/level.entity';
 import { Tag } from 'src/tag/entity/tag.entity';
+import { USER } from 'src/fixtures/mock-user';
+import { User } from 'src/user/entity/user.entity';
 
 @Injectable()
 export class CreateDataService {
@@ -17,37 +19,25 @@ export class CreateDataService {
         private connection: Connection
     ) {}
 
-    async createData(): Promise<void> {
+    async createAllData(): Promise<void> {
         // Create Quizz
         console.log('CREATING QUIZZ');
-        for (const quizz of QUIZZ) {
-            const newQuizz = this.connection.getRepository(Quizz).create(quizz);
-            await this.connection.getRepository(Quizz).save(newQuizz)
-        }
+        this.createData(QUIZZ);
         // Create Question
         console.log('CREATING QUESTION');
-        for (const question of QUESTION) {
-            const newQuestion = this.connection.getRepository(Question).create(question);
-            await this.connection.getRepository(Question).save(newQuestion)
-        }
+        this.createData(QUESTION);
         // Create Answer
         console.log('CREATING ANSWER');
-        for (const answer of ANSWER) {
-            const newAnswer = this.connection.getRepository(Answer).create(answer);
-            await this.connection.getRepository(Answer).save(newAnswer)
-        }
+        this.createData(ANSWER);
         // Create Level
         console.log('CREATING LEVEL');
-        for (const level of LEVEL) {
-            const newLevel = this.connection.getRepository(Level).create(level);
-            await this.connection.getRepository(Level).save(newLevel)
-        }
+        this.createData(LEVEL);
         // Create Tag
         console.log('CREATING TAG');
-        for (const tag of TAG) {
-            const newTag = this.connection.getRepository(Tag).create(tag);
-            await this.connection.getRepository(Tag).save(newTag)
-        }
+        this.createData(TAG);
+        // Create User
+        console.log('CREATING USER');
+        this.createData(USER);
         // Relations
         /* console.log('CREATING RELATIONS');
         const entityManager = getManager();
@@ -65,13 +55,36 @@ export class CreateDataService {
         await entityManager.query('TRUNCATE TABLE answer RESTART IDENTITY CASCADE');
         await entityManager.query('TRUNCATE TABLE level RESTART IDENTITY CASCADE');
         await entityManager.query('TRUNCATE TABLE tag RESTART IDENTITY CASCADE');
+        await entityManager.query('TRUNCATE TABLE public.user RESTART IDENTITY CASCADE');
     }
 
     async loadFixture(): Promise<void> {
         console.log('** DELETING EXISTING DATA **');
         await this.cleanAll();
         console.log('** LOADING FIXTURES **');
-        await this.createData();
+        await this.createAllData();
         console.log('** FIXTURES LOADED SUCCESSFULLY **');
+    }
+
+    async createData(data) {
+        const dataEntity = this.selectRepository(data);
+        
+        const repository = this.connection.getRepository(dataEntity);
+        for (const value of data) {
+            const newData = repository.create(value);
+            await repository.save(newData);
+        }
+    }
+
+    selectRepository(data) {
+        let repository;
+        data === QUIZZ ? repository = Quizz : null;
+        data === QUESTION ? repository = Question : null;
+        data === ANSWER ? repository = Answer : null;
+        data === LEVEL ? repository = Level : null;
+        data === TAG ? repository = Tag : null;
+        data === USER ? repository = User : null;
+
+        return repository;
     }
 }

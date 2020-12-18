@@ -6,7 +6,7 @@
     "type": "postgres",
     "port": 5432,
     "database": "quizzmanagement",
-    "loadFixtures": false
+    "loadFixtures": true
   },
   "jwt": {
     "expiresIn": 1800
