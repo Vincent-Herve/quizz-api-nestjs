@@ -12,6 +12,7 @@ import { Level } from 'src/quizz/entity/level.entity';
 import { Tag } from 'src/tag/entity/tag.entity';
 import { USER } from 'src/fixtures/mock-user';
 import { User } from 'src/user/entity/user.entity';
+import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
 
 @Injectable()
 export class CreateDataService {
@@ -50,24 +51,14 @@ export class CreateDataService {
 
     async cleanAll(): Promise<void> {
         const entityManager = getManager();
-        await entityManager.query('TRUNCATE TABLE quizz RESTART IDENTITY CASCADE');
-        await entityManager.query('TRUNCATE TABLE question RESTART IDENTITY CASCADE');
-        await entityManager.query('TRUNCATE TABLE answer RESTART IDENTITY CASCADE');
-        await entityManager.query('TRUNCATE TABLE level RESTART IDENTITY CASCADE');
-        await entityManager.query('TRUNCATE TABLE tag RESTART IDENTITY CASCADE');
-        await entityManager.query('TRUNCATE TABLE public.user RESTART IDENTITY CASCADE');
+        const tables: string[] = ['quizz', 'question', 'answer', 'level', 'tag', 'public.user'];
+        for (const table of tables) {
+            await entityManager.query(`TRUNCATE TABLE ${table} RESTART IDENTITY CASCADE`);
+        } 
     }
 
-    async loadFixture(): Promise<void> {
-        console.log('** DELETING EXISTING DATA **');
-        await this.cleanAll();
-        console.log('** LOADING FIXTURES **');
-        await this.createAllData();
-        console.log('** FIXTURES LOADED SUCCESSFULLY **');
-    }
-
-    async createData(data) {
-        const dataEntity = this.selectRepository(data);
+    async createData(data): Promise<void> {
+        const dataEntity = this.selectEntity(data);
         
         const repository = this.connection.getRepository(dataEntity);
         for (const value of data) {
@@ -76,15 +67,23 @@ export class CreateDataService {
         }
     }
 
-    selectRepository(data) {
-        let repository;
-        data === QUIZZ ? repository = Quizz : null;
-        data === QUESTION ? repository = Question : null;
-        data === ANSWER ? repository = Answer : null;
-        data === LEVEL ? repository = Level : null;
-        data === TAG ? repository = Tag : null;
-        data === USER ? repository = User : null;
+    selectEntity(data): EntityClassOrSchema {
+        let entity: EntityClassOrSchema;
+        data === QUIZZ ? entity = Quizz : null;
+        data === QUESTION ? entity = Question : null;
+        data === ANSWER ? entity = Answer : null;
+        data === LEVEL ? entity = Level : null;
+        data === TAG ? entity = Tag : null;
+        data === USER ? entity = User : null;
 
-        return repository;
+        return entity;
+    }
+
+    async loadFixture(): Promise<void> {
+        console.log('** DELETING EXISTING DATA **');
+        await this.cleanAll();
+        console.log('** LOADING FIXTURES **');
+        await this.createAllData();
+        console.log('** FIXTURES LOADED SUCCESSFULLY **');
     }
 }
