@@ -1,3 +1,3 @@
-export interface Level {
+export interface ILevel {
     name: string;
 }

@@ -1,6 +1,6 @@
-import { Level } from "./level";
+import { ILevel } from "./level";
 
-export const LEVEL: Level[] = [
+export const LEVEL: ILevel[] = [
     {
         name: 'Débutant'
     },

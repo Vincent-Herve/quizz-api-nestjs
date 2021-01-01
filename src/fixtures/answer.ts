@@ -1,3 +1,3 @@
-export interface Answer {
+export interface IAnswer {
     answer: string;
 }

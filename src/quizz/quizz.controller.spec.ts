@@ -3,6 +3,7 @@ import { QuizzController } from './quizz.controller';
 import { QuizzService } from './quizz.service';
 import { QuizzRepository } from './repository/quizz.repository';
 import { Quizz } from './entity/quizz.entity';
+import { QuestionRepository } from './repository/question.repository';
 
 describe('QuizzController', () => {
   let quizzController: QuizzController;
@@ -20,7 +21,8 @@ describe('QuizzController', () => {
         controllers: [QuizzController],
         providers: [
           QuizzService,
-          QuizzRepository
+          QuizzRepository,
+          QuestionRepository
         ],
       }).compile();
 

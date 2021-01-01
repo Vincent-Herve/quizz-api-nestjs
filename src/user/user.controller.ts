@@ -4,7 +4,9 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { GetUserInfo } from './get-user-info.decorator';
 import { UserInfo } from './user-info.interface';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
     

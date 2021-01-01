@@ -1,6 +1,6 @@
-import { Answer } from './answer';
+import { IAnswer } from './answer';
 
-export const ANSWER: Answer[] = [
+export const ANSWER: IAnswer[] = [
     {
         answer: 'Linus Torvalds'
     },

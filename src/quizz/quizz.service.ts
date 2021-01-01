@@ -4,12 +4,14 @@ import { QuizzRepository } from './repository/quizz.repository';
 import { Quizz } from './entity/quizz.entity';
 import { UpdateQuizzDto } from './dto/update-quizz.dto';
 import { CreateQuizzDto } from './dto/create-quizz.dto';
+import { QuestionRepository } from './repository/question.repository';
 
 @Injectable()
 export class QuizzService {
     constructor(
         @InjectRepository(QuizzRepository)
-        private quizzRepository: QuizzRepository
+        private quizzRepository: QuizzRepository,
+        private questionRepository: QuestionRepository
     ) {}
 
     async getQuizzes(): Promise<Quizz[]> {
@@ -29,7 +31,11 @@ export class QuizzService {
     }
 
     async createQuizz(createQuizzDto: CreateQuizzDto): Promise<Quizz> {
-        return this.quizzRepository.createQuizz(createQuizzDto);
+        const { questions } = createQuizzDto;
+        const newQuizz = await this.quizzRepository.createQuizz(createQuizzDto);
+        await this.questionRepository.createAllQuestions(questions, newQuizz);
+
+        return newQuizz;
     }
 
     async updateQuizz(id: string, updateQuizzDto: UpdateQuizzDto): Promise<Quizz> {

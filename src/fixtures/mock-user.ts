@@ -1,6 +1,6 @@
-import { User } from "./user";
+import { IUser } from "./user";
 
-export const USER: User[] = [
+export const USER: IUser[] = [
     {
         username: 'Vinskay',
         email: 'teamkay.evo@gmail.com',

@@ -1,4 +1,4 @@
-export interface Quizz {
+export interface IQuizz {
     title: string;
     description: string;
 }

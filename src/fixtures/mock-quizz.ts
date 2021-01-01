@@ -1,6 +1,6 @@
-import { Quizz } from "./quizz";
+import { IQuizz } from "./quizz";
 
-export const QUIZZ: Quizz[] = [
+export const QUIZZ: IQuizz[] = [
     {
         title: 'Linux - I',
         description: 'Non, ce n\'est pas un pingouin!'

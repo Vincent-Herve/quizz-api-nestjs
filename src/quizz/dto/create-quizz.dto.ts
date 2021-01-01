@@ -1,4 +1,5 @@
 import { IsNotEmpty } from "class-validator";
+import { CreateQuestionDto } from './create-question.dto';
 
 export class CreateQuizzDto {
     @IsNotEmpty()
@@ -6,4 +7,7 @@ export class CreateQuizzDto {
     
     @IsNotEmpty()
     description: string;
+
+    questions: CreateQuestionDto[];
+    tags: string[];
 }

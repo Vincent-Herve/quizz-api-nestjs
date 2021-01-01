@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QuizzService } from './quizz.service';
 import { QuizzRepository } from './repository/quizz.repository';
+import { QuestionRepository } from './repository/question.repository';
 
 const mockQuizzRepository = () => ({
   find: jest.fn(),
@@ -14,7 +15,8 @@ describe('QuizzService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         QuizzService,
-        { provide: QuizzRepository, useFactory: mockQuizzRepository }
+        { provide: QuizzRepository, useFactory: mockQuizzRepository },
+        QuestionRepository
       ],
     }).compile();
 

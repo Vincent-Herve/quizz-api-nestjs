@@ -57,17 +57,17 @@ export class CreateDataService {
         } 
     }
 
-    async createData(data): Promise<void> {
-        const dataEntity = this.selectEntity(data);
+    async createData(data: any[]): Promise<void> {
+        const entity = this.selectEntity(data);
         
-        const repository = this.connection.getRepository(dataEntity);
+        const repository = this.connection.getRepository(entity);
         for (const value of data) {
             const newData = repository.create(value);
             await repository.save(newData);
         }
     }
 
-    selectEntity(data): EntityClassOrSchema {
+    selectEntity(data: any[]): EntityClassOrSchema {
         let entity: EntityClassOrSchema;
         data === QUIZZ ? entity = Quizz : null;
         data === QUESTION ? entity = Question : null;

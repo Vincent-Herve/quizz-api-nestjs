@@ -1,6 +1,6 @@
-import { Tag } from "./tag";
+import { ITag } from "./tag";
 
-export const TAG: Tag[] = [
+export const TAG: ITag[] = [
     {
         name: 'Cinéma'
     },

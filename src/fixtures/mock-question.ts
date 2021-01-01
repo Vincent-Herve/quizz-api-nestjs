@@ -1,6 +1,6 @@
-import { Question } from "./question";
+import { IQuestion } from "./question";
 
-export const QUESTION: Question[] = [
+export const QUESTION: IQuestion[] = [
     {
         question: 'Quel programmeur a créé et continue de diriger le développement du noyau de Linux ?',
         anecdote: 'Linus a découvert l\'informatique vers l\'âge de 11 ans grâce à l\'ordinateur de son grand-père, un Commodore VIC-20.'
