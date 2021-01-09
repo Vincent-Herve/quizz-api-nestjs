@@ -12,8 +12,8 @@ export class UserController {
     
     @UseGuards(AuthGuard(), RolesGuard)
     @Get('/getInfo')
-    @Roles('member', 'admin')
-    getUserInfo(@GetUserInfo() userInfo: UserInfo): UserInfo {
+    @Roles('admin')
+    getUserAdminInfo(@GetUserInfo() userInfo: UserInfo): UserInfo {
         return userInfo;
     }
 }
